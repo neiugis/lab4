@@ -187,8 +187,8 @@ function hex_style(hexagons) {
 
               <h3><i class="fa fa-paint-brush"></i> Add legend</h3>
                  <ul>
-                           <li>Next, we will add legend to the map. In the <code>head</code> section of your html document, place the following lines to define the appearance of the legend (see the comment lines in red for explanations):
-                         <pre>&lt;style&gt;
+                           <li>Next, we will add legend to the map. In the <code>head</code> section of your html document, find the <code>style</code> section, place the following lines to define the appearance of the legend (same place where we defined map height and hexagon opacity):
+                         <pre>
      <span style="color:red">/* Optional: adjust the values below to change the appearance of the legend */</span>
      .legend {
          padding: 6px 8px;
@@ -206,7 +206,7 @@ function hex_style(hexagons) {
          margin-right: 8px;
          opacity: 0.7;
      }
-    &lt;/style&gt;
+  
     </pre></li>
                      <li>Next, in the <code>script</code> section of <code>body</code>, add the following lines below <code>L.geoJson</code> to define how the legend will be created in your map (see the comment lines in red for explanation):
                          <pre>var legend = L.control({position: 'bottomright'}); <span style="color:red">// Try the other three corners if you like.</span>
