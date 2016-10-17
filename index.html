@@ -214,12 +214,11 @@ function hex_style(hexagons) {
     legend.onAdd = function (map) {
 
      var div = L.DomUtil.create('div', 'legend'),
-         grades = [<span style="color:blue">0, 32, 53, 87, 139</span>]; <span style="color:red">// The <b>break values</b> to define the intervals of population, note we begin from 0 here</span>
 
-     div.innerHTML = <span style="color:#cc6600">'&lt;b&gt;Population Density &lt;br&gt; 2011 &lt;br&gt;&lt;/b&gt;'</span>; <span style="color:red">// The <b>legend title</b>, in this case it's Population Density 2011</span>
+     div.innerHTML = <span style="color:#cc6600">'&lt;b&gt;<b>Robbery Incidents</b> &lt;br&gt; <b>2015</b> &lt;br&gt;&lt;/b&gt;'</span>; <span style="color:red">// The <b>legend title</b></span>
 
      <span style="color:red">// Loop through our the classes and generate a label with a colored square for each interval. </span>
-     for (var i = 0; i &lt; grades.length; i++) {
+     for (var i = 0; i &lt; classes; i++) {
          div.innerHTML +=
          '&lt;i style="background:' + scheme[i] + '"&gt;&lt;/i&gt;' + Math.round(d3.min(q.invertExtent(i)))+ '&ndash;' +
          Math.round(d3.max(q.invertExtent(i))) + '&lt;br&gt;';
