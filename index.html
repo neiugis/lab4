@@ -140,8 +140,7 @@ We basically define the height and margins of the webpage and the div container 
                 <li>In the <code>&lt;script&gt;</code> section (inside <code>&lt;body&gt;</code>), add the following lines below the <code>L.tileLayer</code> snippet. Read the comment lines in blue for explanations.<br><br>
                   <b>Note</b>: I have saved the geojson layer as <code>robbery.geojson</code> in the same directory as the <code>hexbin.html</code> file. If you have organized and/or named your geojson file differently, use <b>relative url</b> to link to the file (review last week's slides if in doubt).
                 <pre>
-<span style="color:blue">/* Use d3.json to read in the geojson file (robbery.geojson) we exported from QGIS.
- * Replace the geojson file name if you used some other names.
+<span style="color:blue">/* d3.json reads in the geojson file (robbery.geojson) we exported from QGIS
  * L.hexLayer is a leaflet function for creating hexbins based on the input data
  * The hexagons will be styled based on the hex_style function that is defined in the following code snippet
  */</span>
