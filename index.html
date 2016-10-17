@@ -156,8 +156,8 @@ We basically define the height and margins of the webpage and the div container 
  * and the colorbrewer color scheme: http://colorbrewer2.org/ (see image below for more info)
  */</span>
 var max, scale,
-    classes = <span style="color:#cc6600">9</span>,
-    scheme = colorbrewer["<span style="color:#cc6600">RdYlGn</span>"][classes];
+    classes = <span style="color:#cc6600">9</span>,   <span style="color:red"> // <b>number of classes</b> to use</span>
+    scheme = colorbrewer["<span style="color:#cc6600">RdYlGn</span>"][classes]; <span style="color:red"> // name of the <b>color scheme</b> from clorbrewer</span>
 
 <span style="color:blue">/* The function hex_style below determines a quantize classification/equal interval (https://goo.gl/CfjNH3)
  * based on the map's initial data density (which is based on the initial zoom level)
@@ -221,7 +221,7 @@ function hex_style(hexagons) {
 
      <span style="color:red">//  </span>
      var q= <span style="color:red">d3.scale.quantize</span>()   <span style="color:red">// D3 also offers other <b>classification methods</b>: https://goo.gl/6DMHFe</span>
-               .domain([0, 269])
+               .domain([0, 269])   // I will show you how I got the 269 (maximum count) later in class.
                .range(d3.range(classes));
 
      <span style="color:red">// Loop through our the classes and generate a label with a colored square for each interval. </span>
