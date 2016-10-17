@@ -167,7 +167,7 @@ function hex_style(hexagons) {
     <span style="color:blue">// Maintain a density scale relative to initial zoom level.</span>
     if (!(max &amp;&amp; scale)) {
         max = d3.max(hexagons.data(), function (d) { return d.length; });
-        scale = <span style="color:#cb4335">d3.scale.quantize</span>()  <span style="color:red">// quantize classification method from D3, there are more options: https://goo.gl/6DMHFe</span>
+        scale = <span style="color:#cb4335">d3.scale.quantize</span>()  <span style="color:red">// quantize <b>classification method</b> from D3, there are more options: https://goo.gl/6DMHFe</span>
                   .domain([0, max])
                   .range(d3.range(classes));
     }
