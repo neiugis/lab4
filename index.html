@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Lab 4 - Hexbin Map </title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/business-casual.css" rel="stylesheet">
+
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="font-awesome/css/font-awesome-animation.css">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Slab:100,300,400,600,700,100italic,300italic,400italic,600italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <div class="brand">Lab 4. Hexbin Map</div>
+    <div class="address-bar">GES 387 - Interactive Cartography</div>
+
+    <div class="container">
+
+        <div class="row">
+            <div class="box">
+                <!--<div class="col-lg-12">
+                    <hr>
+                    <h2 class="intro-text text-center">
+                        <strong>blog</strong>
+                    </h2>
+                    <hr>
+                </div>-->
+                <div class="col-lg-12 text-center" style="text-align:left">
+                  <h3>Overview</h3>
+                        <p><i class="fa fa-spinner fa-spin"></i>  In this lab, we will create a hexbin map using Leaflet and D3. </p>
+                        <p><i class="fa fa-spinner fa-spin"></i>  Please submit your assignment via according to the requirements in the <a href="#hw"><b>Deliverables</b></a> section.</p>
+                        <p style="color:red"><b><i class="fa fa-spinner fa-spin"></i>  Due: 11:59 pm, Wednesday, 10/26</b></p>
+
+
+
+                    <h3><i class="fa fa-paint-brush"></i> Install Leaflet and D3</h3>
+                    <ul>
+                           <li>Before you start, create a <b>new file folder</b> (e.g., lab4) for this lab.</li>
+
+                            <li>For making hexbin maps, we will be using functions from the <a href="https://d3js.org/" target="_blank">D3</a> library (another JavaScript library for data visualization) and Leaflet plugins, so let's point to those library files first. Open your <b>html editor</b> (e.g., <b>Atom</b>) and add the following lines. Save the document as <code>map4.html</code> in your lab4 folder.<br>
+                           <pre>
+&lt;!DOCTYPE html&gt;
+&lt;<span >html</span>&gt;
+   &lt;<span style="color: #cb4335">head</span>&gt;
+     &lt;<span >title</span>&gt;Hexbin Map&lt;<span >/title</span>&gt;
+     &lt;<span >link</span> rel="stylesheet" href="<span style="color: #800080">http://cdn.leafletjs.com/leaflet-0.5/leaflet.css</span>"/&gt;
+     &lt;<span >script</span> src="<span style="color: #800080">http://cdn.leafletjs.com/leaflet-0.5/leaflet-src.js</span>"&gt;&lt;<span >/script</span>&gt;
+
+     &lt;<span >script src="<span style="color: #800080">http://d3js.org/d3.v3.min.js</span>"&gt;&lt;<span >/script</span>&gt;
+     &lt;<span >script src="<span style="color: #800080">http://d3js.org/d3.hexbin.v0.js</span>"&gt;&lt;<span >/script</span>&gt;
+
+     &lt;<span >script type="text/javascript" src="<span style="color: #800080">http://raw.github.com/affinitybridge/d3-demos-quakes/master/js/colorbrewer.js</span>"&gt;&lt;<span >/script</span>&gt;
+     &lt;<span >script type="text/javascript" src="<span style="color: #800080">http://raw.github.com/affinitybridge/d3-demos-quakes/master/js/leaflet.hexbin-layer.js</span>"&gt;&lt;<span >/script</span>&gt;
+   &lt;<span style="color: #cb4335">/head</span>&gt;
+
+   &lt;<span style="color: #cb4335">body</span>&gt;
+
+   &lt;<span style="color: #cb4335" >/body</span>&gt;
+&lt;<span >/html</span>&gt;
+
+</pre>
+                  Take a look at the above code snippets, do you notie anything different from what we did in previous labs?
+                  <ul style="font-size:13px">
+                  <li>First of all, we have pointed to more library files (e.g., <code>d3.v3.min.js</code>, <code>d3.hexbin.v0.js</code>, <code>leaflet.hexbin-layer.js</code>, <code>colorbrewer.js</code>) that contain the functions we need for making a hexbin map.</li>
+
+                  <li>You may also have noticed that we used <span style="color: #800080"><b>absolute url</b></span> here to point to the library files from Leaflet and D3. In other words, we have directly linked to the files with a web url. </li></ul>
+                  </li></ul>
+
+             <h3><i class="fa fa-paint-brush"></i> Add Basemap (full screen)</h3>
+                    <p>As always, the first mapping step is to set up the basemap. This step is similar to what we did before.</p>
+                    <p>However, I do want to share with you something <b>NEW</b> here! Some of you have asked how to make the basemap <b>"fullscreen"</b> (the height of the map area will adjust according to the window size, as apposed to using a fixed height such as 500px). So let's do this!</p>
+
+                    <ul>
+                      <li>First, add the following snippets in the <code>&lt;body&gt;</code> section. See the comment lines in blue for more explanations, if needed.
+                      <pre>
+<span style="color: blue">&lt;!--Create a div container for the map without specifying height--&gt;</span>
+&lt;<span style="color: #cb4335">div</span> id='<span style="color: #cc6600">map</span>'&gt;&lt;/<span style="color: #cb4335" >div</span>&gt;
+
+&lt;<span style="color: #cb4335">script</span> type="text/javascript"&gt;
+
+      <span style="color: blue">//As always, initialize the map using L.map
+      //The center and zoom level is for Chicago</span>
+      <span style="color: purple">var</span> map = L.map('<span style="color: #cc6600">map</span>').setView([<span style="color: #cc6600">41.8333926,-88.0123393</span>], <span style="color: #cc6600">10</span>);
+
+      <span style="color: blue">//Then add mapbox tilelayer as the basemap
+      //I used mapbox.dark, you are free to use other tile maps, but it needs to be appropriate (not too distracting)
+      //Please use your own mapbox token, if mapbox tiles are used</span>
+      L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+        attribution: 'Map data &amp;copy; &lt;a href="http://openstreetmap.org"&gt;OpenStreetMap&lt;/a&gt; contributors, &lt;a href="http://creativecommons.org/licenses/by-sa/2.0/"&gt;CC-BY-SA&lt;/a&gt;, Imagery &amp;copy; &lt;a href="http://mapbox.com"&gt;Mapbox&lt;/a&gt;',
+        id: '<span style="color: #cc6600">mapbox.dark</span>',
+        accessToken: '<span style="color: red">Your Mapbox Token</span>'
+      }).addTo(map);
+
+&lt;/<span style="color: #cb4335" >script</span>&gt;
+                      </pre></li>
+                      <li>Then in the <code>&lt;head&gt;</code> section, add the following snippet to define the style of the container to make the map fullscreen:
+                      <pre>
+&lt;<span style="color: red">style</span> type="text/css"&gt;
+  <span style="color: #cb4335">html, body</span> { margin: <span style="color: #cc6600">0</span>; padding: <span style="color: #cc6600">0</span>; height: <span style="color: #cc6600">100%</span>; }
+  <span style="color: blue">#map</span> { min-height: <span style="color: #cc6600">100%</span>; }
+&lt;/<span style="color: red">style</span>&gt;</pre>
+We basically define the height and margins of the webpage and the div container (<code>#map</code>, which is the id of the div defined in the <code>body</code> section). The code is somewhat self-explanatory, but let me know if you need more information. <br><br>
+                      Now, you should see the basemap displayed in a "fullscreen" mode. Click <a href="map/basemap.html" target="_blank">here</a> to see my example. </li>
+                    </ul>
+
+       <h3><i class="fa fa-paint-brush"></i> Prepare GeoJson Data (in QGIS)</h3>
+                    <ul >
+                        <li style="font-weight:bold;color:red;"> Getting Data: click <a href="" target="_blank">here</a> to download the shapefile used in this lab. </li>
+                        <li>Unzip the data to your desired directory.</li>
+                        <li>Open <b>QGIS</b> and add the shapefile (vector layer). The layer contains points as crime incidents. For point layer, NO need to simplify geometry, so we can directly save it as a GeoJson layer (Be sure to use <b>EPSG:4326 - WGS 84</b> as the projection). </li>
+                      </ul>
+
+        <h3><i class="fa fa-paint-brush"></i> Create the Hexbin Map</h3>
+            <ul >
+                <li>In the <code>&lt;script&gt;</code> section (inside <code>&lt;body&gt;</code>), add the following lines below the <code>L.tileLayer</code> snippet. Read the comment lines in blue for explanations.<br><br>
+                  <b>Note</b>: I have saved the geojson layer as <code>robbery.geojson</code> in the same directory as the <code>hexbin.html</code> file. If you have organized and/or named your geojson file differently, use <b>relative url</b> to link to the file (review last week's slides if in doubt).
+                <pre>
+<span style="color:blue">/* Use d3.json to read in the geojson file (robbery.geojson) we exported from QGIS.
+ * Replace the geojson file name if you used some other names.
+ * L.hexLayer is a leaflet function for creating hexbins based on the input data
+ * The hexagons will be styled based on the hex_style function that is defined in the following code snippet
+ */</span>
+<span style="color:#cb4335">d3.json</span>("<span style="color:#cc6600">robbery.geojson</span>", function(collection) {
+    L.hexLayer(collection, {
+        applyStyle: hex_style
+    }).addTo(map);
+});
+<span style="color:blue">
+/* First, define the variables to be used in the hex_style function.
+ * You can replace the number of classes to be rendered,
+ * and the colorbrewer color scheme: http://colorbrewer2.org/ (see image below for more info)
+ */</span>
+var max, scale,
+    classes = <span style="color:#cc6600">9</span>,
+    scheme = colorbrewer["<span style="color:#cc6600">YlOrRd</span>"][classes]
+
+<span style="color:blue">/* The function hex_style below determines a quantize classification (https://goo.gl/CfjNH3)
+ * based on the map's initial data density (which is based on the initial zoom level)
+ * and applies the selected color scheme accordingly.
+ */</span>
+function hex_style(hexagons) {
+    <span style="color:blue">// Maintain a density scale relative to initial zoom level.</span>
+    if (!(max &amp;&amp; scale)) {
+        max = d3.max(hexagons.data(), function (d) { return d.length; });
+        scale = <span style="color:#cb4335">d3.scale.quantize</span>()  <span style="color:blue">// D3 also offers other ways to classify data: https://goo.gl/6DMHFe</span>
+                  .domain([0, max])
+                  .range(d3.range(classes));
+    }
+
+    hexagons
+        .attr("stroke", scheme[classes - 1])
+        .attr("fill", function (d) {
+            return scheme[scale(d.length)];
+        });
+}
+                </pre>
+              If you have done everything correctly, you will now see the hexbin layer. Click <a href="map/hexbin.html" target="_blank">here</a> to see an example.</li>
+              <li>About using the <b>colorbrewer color schemes</b>:<br>
+            In Lab 3, we have mannually input the color code for styling the choropleth map using <a href="http://colorbrewer2.org/ " target="_blank">colorbrewer</a>. In this lab, we have pointed to the <code>colorbrewer.js</code> in the head section. This allows us to use the different color schemes by specifying a name and number of classes (see above for usage). <br><br>
+          For most color schemes, we can use number <b>3-9</b> as the number of classes. What about the <b>color scheme name</b>? See image below for an example: <br><img src="img/colorbrew.png" width=950px></li>
+          <li>Want to add <b>transparency</b> for the hexagons? Modify the css <code>style</code> inside <code>head</code> (see image below): <br>
+          <img src="img/opacity.png" width=600px><br> Opacity value ranges between <b>0.0 (fully transparent)</b> and <b>1.0 (fully opaque)</b>. </li>
+              </ul>
+              <h3><i class="fa fa-paint-brush"></i> Add Legend</h3>
+              <ul>
+              <li></li></ul>
+
+                <br>
+                <h2 >Deliverables (<a href="#top" style="font-weight:normal; text-decoration:underline">Back to Top <i class="fa fa-arrow-circle-up faa-float animated" aria-hidden="true"></i></a>)</h2>
+                <p>Please turn in the <code>data.js</code> file and <b>a separate .html file for each question</b> below via Dropbox on D2L. There will be <b>four</b> files in total. You don't have to turn in the leaflet files as I will have them on my computer.</p>
+                <ul id="hw">
+                  <li><b>Question 1:</b> Submit the html file you have just completed by following along the instructions (8 pts).</li>
+                  <li><b>Question 2:</b> Save the html file as <code>styling.html</code>. Modify the code to use a <b>different color scheme</b> and number of classes for rendering the hexagons. (6 pts). </li>
+                  <li><b>Question 3:</b> attribution (5 pts). </li>
+                  <li><b>Question 4:</b> Hexbin maps are best for revealing spatial patterns for large point-based datasets. Can you think of some other applications of hexbin maps? For this question click <a href="https://goo.gl/forms/P9e5rbJGH1OtdXXc2" target="_blank">here</a> to answer (6 pts). </li>
+
+                </ul><br>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <p>Copyright &copy; Ting Liu 2016</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
