@@ -157,7 +157,7 @@ We basically define the height and margins of the webpage and the div container 
  */</span>
 var max, scale,
     classes = <span style="color:#cc6600">9</span>,
-    scheme = colorbrewer["<span style="color:#cc6600">YlOrRd</span>"][classes];
+    scheme = colorbrewer["<span style="color:#cc6600">RdYlGn</span>"][classes];
 
 <span style="color:blue">/* The function hex_style below determines a quantize classification (https://goo.gl/CfjNH3)
  * based on the map's initial data density (which is based on the initial zoom level)
@@ -220,7 +220,7 @@ function hex_style(hexagons) {
      div.innerHTML = <span style="color:#cc6600">'&lt;b&gt;<b>Robbery Incidents</b> &lt;br&gt; <b>2015</b> &lt;br&gt;&lt;/b&gt;'</span>; <span style="color:red">// The <b>legend title</b></span>
 
      <span style="color:red">//  </span>
-     
+
 
      <span style="color:red">// Loop through our the classes and generate a label with a colored square for each interval. </span>
      for (var i = 0; i &lt; classes; i++) {
