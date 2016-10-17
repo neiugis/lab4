@@ -130,7 +130,9 @@ We basically define the height and margins of the webpage and the div container 
                     <ul >
                         <li style="font-weight:bold;color:red;"> Getting Data: click <a href="https://drive.google.com/file/d/0BzvZaHCgmEmNN1h3N1VJaUxXSGs/view?usp=sharing" target="_blank">here</a> to download the shapefile used in this lab. </li>
                         <li>Unzip the data to your desired directory.</li>
-                        <li>Open <b>QGIS</b> and add the shapefile (vector layer). The layer contains points as crime incidents. For point layer, NO need to simplify geometry, so we can directly save it as a GeoJson layer (Be sure to use <b>EPSG:4326 - WGS 84</b> as the projection). </li>
+                        <li>Open <b>QGIS</b> and add the shapefile (vector layer). The layer contains points as crime incidents. The points are clustered so the pattern is not clearly rendered with the original points.</li>
+                          <li>For point layer, NO need to simplify geometry, so we can directly save it as a GeoJson layer (Be sure to use <b>EPSG:4326 - WGS 84</b> as the projection). </li>
+                        <li>Just make sure you remember where to find the .geojson data and its name. That's it. We DON'T need to modify the data for this lab.</li>
                       </ul>
 
         <h3><i class="fa fa-paint-brush"></i> Create the Hexbin Map</h3>
@@ -155,7 +157,7 @@ We basically define the height and margins of the webpage and the div container 
  */</span>
 var max, scale,
     classes = <span style="color:#cc6600">9</span>,
-    scheme = colorbrewer["<span style="color:#cc6600">YlOrRd</span>"][classes]
+    scheme = colorbrewer["<span style="color:#cc6600">YlOrRd</span>"][classes];
 
 <span style="color:blue">/* The function hex_style below determines a quantize classification (https://goo.gl/CfjNH3)
  * based on the map's initial data density (which is based on the initial zoom level)
@@ -206,10 +208,10 @@ function hex_style(hexagons) {
          margin-right: 8px;
          opacity: 0.7;
      }
-  
+
     </pre></li>
                      <li>Next, in the <code>script</code> section of <code>body</code>, add the following lines below <code>L.geoJson</code> to define how the legend will be created in your map (see the comment lines in red for explanation):
-                         <pre>var legend = L.control({position: 'bottomright'}); <span style="color:red">// Try the other three corners if you like.</span>
+                         <pre>var legend = L.control({position: 'bottomleft'}); <span style="color:red">// Try <b>the other three corners</b> if you like.</span>
 
     legend.onAdd = function (map) {
 
@@ -217,7 +219,8 @@ function hex_style(hexagons) {
 
      div.innerHTML = <span style="color:#cc6600">'&lt;b&gt;<b>Robbery Incidents</b> &lt;br&gt; <b>2015</b> &lt;br&gt;&lt;/b&gt;'</span>; <span style="color:red">// The <b>legend title</b></span>
 
-     <span style="color:red">// Loop through our the classes and generate a label with a colored square for each interval. </span>
+     <span style="color:red">//  </span>
+     
 
      <span style="color:red">// Loop through our the classes and generate a label with a colored square for each interval. </span>
      for (var i = 0; i &lt; classes; i++) {
