@@ -184,9 +184,59 @@ function hex_style(hexagons) {
           <li>Want to add <b>transparency</b> for the hexagons? Modify the css <code>style</code> inside <code>head</code> (see image below): <br>
           <img src="img/opacity.png" width=600px><br> Opacity value ranges between <b>0.0 (fully transparent)</b> and <b>1.0 (fully opaque)</b>. </li>
               </ul>
-              <h3><i class="fa fa-paint-brush"></i> Add Legend</h3>
-              <ul>
-              <li></li></ul>
+
+              <h3><i class="fa fa-paint-brush"></i> Add legend</h3>
+                 <ul>
+                           <li>Next, we will add legend to the map. In the <code>head</code> section of your html document, place the following lines to define the appearance of the legend (see the comment lines in red for explanations):
+                         <pre>&lt;style&gt;
+     <span style="color:red">/* Optional: adjust the values below to change the appearance of the legend */</span>
+     .legend {
+         padding: 6px 8px;
+         line-height: 18px;
+         background: rgba(255,255,255,0.9);
+         box-shadow: 0 0 15px rgba(0,0,0,0.2);
+         border-radius: 5px;
+     }
+
+      <span style="color:red">/* Optional: adjust the values below to change the appearance of the legend color boxes */</span>
+      .legend i {
+         width: 18px;
+         height: 18px;
+         float: left;
+         margin-right: 8px;
+         opacity: 0.7;
+     }
+    &lt;/style&gt;
+    </pre></li>
+                     <li>Next, in the <code>script</code> section of <code>body</code>, add the following lines below <code>L.geoJson</code> to define how the legend will be created in your map (see the comment lines in red for explanation):
+                         <pre>var legend = L.control({position: 'bottomright'}); <span style="color:red">// Try the other three corners if you like.</span>
+
+    legend.onAdd = function (map) {
+
+     var div = L.DomUtil.create('div', 'legend'),
+         grades = [<span style="color:blue">0, 32, 53, 87, 139</span>]; <span style="color:red">// The <b>break values</b> to define the intervals of population, note we begin from 0 here</span>
+
+     div.innerHTML = <span style="color:#cc6600">'&lt;b&gt;Population Density &lt;br&gt; 2011 &lt;br&gt;&lt;/b&gt;'</span>; <span style="color:red">// The <b>legend title</b>, in this case it's Population Density 2011</span>
+
+     <span style="color:red">// Loop through our the classes and generate a label with a colored square for each interval. </span>
+     for (var i = 0; i &lt; grades.length; i++) {
+         div.innerHTML +=
+         '&lt;i style="background:' + scheme[i] + '"&gt;&lt;/i&gt;' + Math.round(d3.min(q.invertExtent(i)))+ '&ndash;' +
+         Math.round(d3.max(q.invertExtent(i))) + '&lt;br&gt;';
+     }
+
+     return div;
+    };
+
+    legend.addTo(map);</pre>
+                         The above functions for defining the legend may be too much for you to understand. But you can simply replace some small portions according to the comment lines when you answer question 3 or make your own maps.
+                         <br><br>
+                         The legend will be created at the bottom right corner of your map with the defined styles and content:
+                           <iframe src="map/map.html" width=95% height=570 frameborder=0></iframe>
+                     </li>
+
+                 </ul>
+                 <br>
 
                 <br>
                 <h2 >Deliverables (<a href="#top" style="font-weight:normal; text-decoration:underline">Back to Top <i class="fa fa-arrow-circle-up faa-float animated" aria-hidden="true"></i></a>)</h2>
