@@ -112,7 +112,7 @@ legend.onAdd = function (map) {
      // If you are creating a similar choropleth map, you do not need to change lines below.
      for (var i = 0; i < classes; i++) {
          div.innerHTML +=
-         '<i style="background:' + scheme[i] + '"></i>' + Math.round(d3.min(q.invertExtent(i)))+ '–' +
+         '<i style="background:' + scheme[i] + '"></i>' + Math.round(d3.min(q.invertExtent(i)))+ '&dash;' +
         Math.round(d3.max(q.invertExtent(i))) + '<br>';
      }
 

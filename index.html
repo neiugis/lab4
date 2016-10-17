@@ -227,7 +227,7 @@ function hex_style(hexagons) {
      <span style="color:red">// Loop through our the classes and generate a label with a colored square for each interval. </span>
      for (var i = 0; i &lt; classes; i++) {
          div.innerHTML +=
-         '&lt;i style="background:' + scheme[i] + '"&gt;&lt;/i&gt;' + Math.round(d3.min(q.invertExtent(i)))+ '&ndash;' +
+         '&lt;i style="background:' + scheme[i] + '"&gt;&lt;/i&gt;' + Math.round(d3.min(q.invertExtent(i)))+ '&amp;ndash;' +
          Math.round(d3.max(q.invertExtent(i))) + '&lt;br&gt;';
      }
 
