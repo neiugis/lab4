@@ -62,7 +62,7 @@
   * L.hexLayer is a leaflet function for creating hexbins based on the input data
   * The hexagons will be styled based on the hex_style function that is defined in the following code snippet
   */
- d3.json("robbery.geojson", function(collection) {
+ d3.json("https://rawgit.com/neiugis/lab4/gh-pages/map/robbery.geojson", function(collection) {
      L.hexLayer(collection, {
          applyStyle: hex_style
      }).addTo(map);
