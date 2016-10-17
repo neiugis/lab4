@@ -218,6 +218,8 @@ function hex_style(hexagons) {
      div.innerHTML = <span style="color:#cc6600">'&lt;b&gt;<b>Robbery Incidents</b> &lt;br&gt; <b>2015</b> &lt;br&gt;&lt;/b&gt;'</span>; <span style="color:red">// The <b>legend title</b></span>
 
      <span style="color:red">// Loop through our the classes and generate a label with a colored square for each interval. </span>
+
+     <span style="color:red">// Loop through our the classes and generate a label with a colored square for each interval. </span>
      for (var i = 0; i &lt; classes; i++) {
          div.innerHTML +=
          '&lt;i style="background:' + scheme[i] + '"&gt;&lt;/i&gt;' + Math.round(d3.min(q.invertExtent(i)))+ '&ndash;' +
@@ -228,11 +230,11 @@ function hex_style(hexagons) {
     };
 
     legend.addTo(map);</pre>
-                         The above functions for defining the legend may be too much for you to understand. But you can simply replace some small portions according to the comment lines when you answer question 3 or make your own maps.
+                         Again, the above functions for defining the legend may be too much for you to understand at this point. But you can simply replace some small portions according to the comment lines when you answer question 2 or make your own maps.
                          <br><br>
                          The legend will be created at the bottom left corner of your map with the defined styles and content
                      </li>
-
+<h4></h4>
                  </ul>
                  <br>
 

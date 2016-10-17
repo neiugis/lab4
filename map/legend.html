@@ -72,7 +72,7 @@
   */
  var max, scale,
      classes = 9,
-     scheme = colorbrewer["YlOrRd"][classes]
+     scheme = colorbrewer["YlOrRd"][classes];
 
  /* The function hex_style below determines a quantize scale (https://goo.gl/CfjNH3)
   * based on the map's initial data density (which is based on the initial zoom level)
@@ -99,17 +99,20 @@
 legend.onAdd = function (map) {
 
     var div = L.DomUtil.create('div', 'legend'),
-        grades = [0, 32, 53, 87, 139]; // The break values to define the intervals of population, note we begin from 0 here
 
-    div.innerHTML = '<b>Population Density <br> 2011 <br></b>'; // The legend title, in this case it's Population Density 2011
 
+    div.innerHTML = '<b>Robbery Incidents <br> 2015 <br></b>'; // The legend title// The legend title, in this case it's Population Density 2011
+
+    // var q = d3.scale.quantize()  // D3 also offers other ways to classify data: https://goo.gl/6DMHFe
+    //           .domain([0, 269])
+    //           .range(d3.range(classes));
     // Loop through our the classes and generate a label with a colored square for each interval.
     // If you are creating a similar choropleth map, you do not need to change lines below.
-    for (var i = 0; i < grades.length; i++) {
-        div.innerHTML +=
-        '<i style="background:' + getColor(grades[i] + 1) + '"></i>' +
-        grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
-    }
+    for (var i = 0; i < classes; i++) {
+          div.innerHTML +=
+          '<i style="background:' + scheme[i] + '"></i>' + Math.round(d3.min(q.invertExtent(i)))+ '–' +
+          Math.round(d3.max(q.invertExtent(i))) + '<br>';
+      }
 
     return div;
 };
