@@ -210,7 +210,7 @@ function hex_style(hexagons) {
      }
 
     </pre></li>
-                     <li>Next, in the <code>script</code> section of <code>body</code>, add the following lines below <code>L.geoJson</code> to define how the legend will be created in your map (see the comment lines in red for explanation):
+                     <li>Next, in the <code>script</code> section of <code>body</code>, add the following lines below the <code>hex_style</code> function to define how the legend will be created in your map (see the comment lines in red for explanation):
                          <pre>var legend = L.control({position: 'bottomleft'}); <span style="color:red">// Try <b>the other three corners</b> if you like.</span>
 
     legend.onAdd = function (map) {
