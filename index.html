@@ -131,7 +131,7 @@
                         <br><br>As an example, I will use two base layers (a light canvas and a satellite imagery) to switch between, and an overlay geojson layer to turn on and off. For the deliverables, you will add at least two overlay layers.</p>
                     <ul>
                     <li>We already have the Mapbox light canvas as the basemap, and we will create the satellite tile layer. However, it is a little more than just adding another L.tileLayer to make the layers control work. We will need to create two variables for the two tile layers so that we could refer to them later. 
-                        <br>MODIFY the tile layer portion to:
+                        <br><b>MODIFY</b> the tile layer portion to:
             <pre><code class="language-javascript">var canvas = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
    attribution: 'Map data © OpenStreetMap contributors, CC-BY-SA, Imagery © Mapbox',
    maxZoom: 10,
