@@ -133,11 +133,11 @@
                     <li>We already have the Mapbox light canvas as the basemap, and we will create the satellite tile layer. However, it is a little more than just adding another L.tileLayer to make the layers control work. We will need to create two variables for the two tile layers so that we could refer to them later. 
                         <br>MODIFY the tile layer portion to:
             <pre><code class="language-javascript">var canvas = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-       attribution: 'Map data © OpenStreetMap contributors, CC-BY-SA, Imagery © Mapbox',
-       maxZoom: 10,
-       minZoom: 10,
-       id: 'mapbox.light',
-       accessToken:'pk.eyJ1IjoiY3VyZW1hbmdvIiwiYSI6ImNpcTQ4cGFwbDAxbmVmd25vZGNiOTVzeGEifQ.GWZByYkIft6eMRha69C8nw'
+   attribution: 'Map data © OpenStreetMap contributors, CC-BY-SA, Imagery © Mapbox',
+   maxZoom: 10,
+   minZoom: 10,
+   id: 'mapbox.light',
+   accessToken:'pk.eyJ1IjoiY3VyZW1hbmdvIiwiYSI6ImNpcTQ4cGFwbDAxbmVmd25vZGNiOTVzeGEifQ.GWZByYkIft6eMRha69C8nw'
  }).addTo(map);
 
  var imagery = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
