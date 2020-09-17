@@ -43,7 +43,7 @@
                 <div class="wrap">
                   
                    <h1>Lab 4. Layers Control <i class="fa fa-leaf"></i></h1> 
-                  <h3 style="color:#F6F20D"><b><i class="fa fa-spinner fa-spin"></i>  Due: 11:59 pm, Wednesday, 10/3</b></h3>
+                  <h3 style="color:#F6F20D"><b><i class="fa fa-spinner fa-spin"></i>  Due: 11:59 pm, Thursday, 10/1</b></h3>
                 </div>
             </div>
 
@@ -55,8 +55,8 @@
 
                   <p><a id="overview" title="Overview" class="toc-item"></a></p>
                   <h3><i class="fa fa-paint-brush"></i> Overview</h3>
-                  <p><i class="fa fa-spinner fa-spin"></i>  This lab will introduce how to use Leaflet layers control to allow users to easily <b>switch different layers </b>on your map. Scroll down to the <a href="#final">bottom</a> for an example of the final product.</p>
-                    <p><i class="fa fa-spinner fa-spin"></i>  Please read the instructions carefully (including the explanations of each step) and complete the assignment in the <a href="#deliverable">Deliverables</a> section at the bottom. </p>
+                  <p><i class="fa fa-spinner fa-spin"></i>  This lab will introduce Leaflet layers control to allow users to easily <b>switch between different layers </b>on your map. Scroll down to the <a href="#final">bottom</a> for an example.</p>
+                    <p><i class="fa fa-spinner fa-spin"></i>  Please read the instructions carefully (including the explanations of each step) and complete the assignment in the <a href="#deliverable">Deliverables</a> section. </p>
 
 
 
@@ -67,19 +67,19 @@
                   <ul>
                          <li>Before start, create a <b>new file folder</b> (e.g., lab4) for saving the html document and associated data file(s).</li>
 
-                          <li>Open your <b>code editor</b> and add the following lines. And you will need to use <code>your MapBox access token</code>. Note I am <b>NOT defining the height of the <code>div</code></b> in the <code>body</code> section and the map will NOT show up at this point! <br>
+                          <li>Open your <b>code editor</b> and add the following lines. Note I am <b>NOT defining the height of the <code>div</code></b> in the <code>body</code> section and the map will NOT show up at this point! <br>
 
                                <pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
     &lt;head&gt;
         &lt;title&gt;Lab 4&lt;/title&gt;
 
-        &lt;link rel=&quot;stylesheet&quot; href=&quot;https://unpkg.com/leaflet@1.3.4/dist/leaflet.css&quot;
-        integrity=&quot;sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==&quot;
+        &lt;link rel=&quot;stylesheet&quot; href=&quot;https://unpkg.com/leaflet@1.6.0/dist/leaflet.css&quot;
+        integrity=&quot;sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==&quot;
         crossorigin=&quot;&quot;/&gt;
 
-        &lt;script src=&quot;https://unpkg.com/leaflet@1.3.4/dist/leaflet.js&quot;
-        integrity=&quot;sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA==&quot;
+        &lt;script src=&quot;https://unpkg.com/leaflet@1.6.0/dist/leaflet.js&quot;
+        integrity=&quot;sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==&quot;
         crossorigin=&quot;&quot;&gt;&lt;/script&gt;
 
     &lt;/head&gt;
@@ -94,12 +94,10 @@
               zoom: 10
           });
 
-         L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-           attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-           maxZoom: 10,
-           minZoom: 10,
-           id: 'mapbox.light',
-           accessToken: 'your mapbox public access token'
+         L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
+           attribution: 'Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL.',
+           maxZoom: 11,
+           minZoom: 5
          }).addTo(map);
 
         &lt;/script&gt;
@@ -114,7 +112,7 @@
   html, body { margin: 0; padding: 0; height: 100%; }
   #map { min-height: 100%; }
 &lt;/style&gt;</code></pre>
-          We basically defined the height and margins of the webpage and the div container (<code>#map</code>, the id of the div) for creating the fullscreen mode. 
+          We basically defined the height and margins of the webpage and the div container (<code>#map</code>, <i>the id of the div</i>) for creating the fullscreen mode. 
             <br>The code is somewhat self-explanatory, but let me know if you need more information. </li>
 
                       
