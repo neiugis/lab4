@@ -129,24 +129,20 @@
                         <br><br>As an example, I will use two base layers (a light canvas and a satellite imagery) to switch between, and an overlay geojson layer to turn on and off. For the deliverables, you will use at least two overlay layers.</p>
                     <ul>
                     <li>We already have the Carto light canvas as the basemap. So we will need another tile layer. However, it is a little more than just adding another L.tileLayer to make the layers control work. We need to create two variables for the two tile layers so that we could refer to them later. 
-                        <br><b>MODIFY</b> the tile layer portion to (You will need your <span style = "color: red">MapBox Token</span> for the second basemap!):
+                        <br><b>MODIFY</b> the tile layer portion to:
     <pre><code class="language-javascript">var canvas = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
    attribution: 'Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL.',
    maxZoom: 11,
    minZoom: 5
  }).addTo(map);
 
- var imagery = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-   attribution: 'Map data © OpenStreetMap contributors, CC-BY-SA, Imagery © Mapbox',
-   maxZoom: 11,
-   minZoom: 5,
-   id: 'mapbox.satellite',
-   accessToken:'Your MapBox Token'
- });</code></pre>
+ var imagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+});</code></pre>
                        <ul><li>
                            For the light canvas layer, we basically assigned the tile layer to a variable called <code>canvas</code>. You are free to name the variable anything else as long as it is unique. Just make sure to refer to the exact variable name later. Check out <a href="https://www.w3schools.com/js/js_variables.asp" target="_blank">here</a> for more on JS variables.
                            </li>
-                        <li>And we created another tile layer using the Mapbox satellite and assigned it to a variable called <code>imagery</code>.</li>
+                        <li>And we created another tile layer using the ESRI world imagery and assigned it to a variable called <code>imagery</code>.</li>
                         <li>We ONLY used the <code>addTo(map)</code> method for the <code>canvas</code> layer to use it as the <b>default</b> base map. Therefore, you should still see the Carto ligth basemap displayed in the browser.</li></ul>
                         </li>
                         
