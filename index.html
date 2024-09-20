@@ -9,6 +9,7 @@
       <meta name="viewport" content="width=device-width,initial-scale=1">
 
       <link rel="icon" href="layers.png" >
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
       <link rel="stylesheet" href="gridism.css">
       <link rel="stylesheet" href="markdown.css">
@@ -33,6 +34,83 @@
           var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
         })();
       </script>
+        
+        <style>
+            .code-container {
+            position: relative; /* Allows the button to be positioned inside the container */
+            background-color: #f7f7f8;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            padding: 10px;
+            margin-bottom: 20px;
+            font-family: 'Courier New', Courier, monospace;
+            overflow: auto; /* Ensures scroll if content exceeds width */
+        }
+
+        /* Style for the pre and code block */
+        .code-container pre {
+            margin: 0;
+            background: none;
+            border: 1px solid #f7f7f8;
+            padding: 0px 0 0 0; /* Add padding to the top for the button */
+            white-space: pre-wrap;  /* Enable line wrapping */
+            word-wrap: break-word;  /* Allow breaking long words */
+            overflow-wrap: break-word; /* Break long words in modern browsers */
+            font-size: 14px;
+            overflow-x: auto; /* Allow horizontal scroll if needed */
+        }
+
+        /* Style for the copy button */
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #566573;
+            color: #fdfefe;
+            border: none;
+            padding: 4px 8px;
+            font-size: 12px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Tooltip styling */
+        .copy-btn[data-tooltip]::after {
+            content: attr(data-tooltip); /* Display the tooltip text */
+            position: absolute;
+            bottom: 125%; /* Position above the button */
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #333; /* Dark background for the tooltip */
+            color: #fff; /* White text color */
+            padding: 5px 8px;
+            border-radius: 5px;
+            font-size: 12px;
+            white-space: nowrap;
+            opacity: 0; /* Initially hidden */
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 100; /* Ensure it appears above other elements */
+        }
+
+        /* Show the tooltip on hover */
+        .copy-btn:hover::after {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Icon inside the button */
+        .copy-btn i {
+            margin-right: 5px; /* Space between the icon and text */
+        }
+
+        /* Change background color when hovering over the button */
+        .copy-btn:hover {
+            background-color: #566573;
+        }
+        
+        </style>
 
     </head>
 
@@ -43,7 +121,7 @@
                 <div class="wrap">
                   
                    <h1>Lab 4. Layers Control <i class="fa fa-leaf"></i></h1> 
-                  <h3 style="color:#F6F20D"><b><i class="fa fa-spinner fa-spin"></i>  Due: 11:59 pm, Wednesday, 10/4</b></h3>
+                  <h3 style="color:#F6F20D"><b><i class="fa fa-spinner fa-spin"></i>  Due: 11:59 pm, Wednesday, 10/9</b></h3>
                 </div>
             </div>
 
@@ -69,7 +147,11 @@
 
                           <li>Open your <b>code editor</b> and add the following lines. Note I am <b>NOT defining the height of the <code>div</code></b> in the <code>body</code> section and the map will NOT show up at this point! We will add more stuff to make it appear shortly. <br>
 
-                               <pre><code class="language-html">&lt;!DOCTYPE html&gt;
+                               <div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                               
+                               <pre><code class="language-js">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
     &lt;head&gt;
         &lt;title&gt;Lab 4&lt;/title&gt;
@@ -103,15 +185,20 @@
         &lt;/script&gt;
    &lt;/body&gt;
 &lt;/html&gt;
-</code></pre></li>
+</code></pre></div></li>
                       
         
         
         <li>Next, in the <code>head</code> section, add the following lines to define the style of the container to make the map fullscreen:
-        <pre><code class="language-html">&lt;style type=&quot;text/css&quot;&gt;
+         <div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                               
+                               <pre><code class="language-js">
+&lt;style type=&quot;text/css&quot;&gt;
   html, body { margin: 0; padding: 0; height: 100%; }
   #map { min-height: 100%; }
-&lt;/style&gt;</code></pre>
+&lt;/style&gt;</code></pre></div>
           We basically defined the height and margins of the webpage and the div container (<code>#map</code>, <i>the id of the div</i>) for creating the fullscreen mode. 
             <br>The code is somewhat self-explanatory, but let me know if you need more information. </li>
 
@@ -130,15 +217,20 @@
                     <ul>
                     <li>We already have the Carto light canvas as the basemap. So we will need another tile layer. However, it is a little more than just adding another L.tileLayer to make the layers control work. We need to create two variables for the two tile layers so that we could refer to them later. 
                         <br><b>MODIFY</b> the tile layer portion to:
-    <pre><code class="language-javascript">var canvas = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
+<div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                               
+                               <pre><code class="language-js">
+var canvas = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
    attribution: 'Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL.',
    maxZoom: 11,
    minZoom: 5
- }).addTo(map);
+}).addTo(map);
 
- var imagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+var imagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
     attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
-});</code></pre>
+});</code></pre></div>
                        <ul><li>
                            For the light canvas layer, we basically assigned the tile layer to a variable called <code>canvas</code>. You are free to name the variable anything else as long as it is unique. Just make sure to refer to the exact variable name later. Check out <a href="https://www.w3schools.com/js/js_variables.asp" target="_blank">here</a> for more on JS variables.
                            </li>
@@ -147,7 +239,12 @@
                         </li>
                         
                         <li>Next, I will add the geojson layer I have used in lab 3 (london boroughs <a href="https://raw.githubusercontent.com/neiugis/lab4/gh-pages/map/data.js" target = "_blank">data.js</a>). However, we will also need to assign the layer to a variable to be used later:
-                        <pre><code class="language-javascript">var boroughs = L.geoJson(data, {style:style}).addTo(map);</code></pre>
+                        <div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                               
+                               <pre><code class="language-js">
+var boroughs = L.geoJson(data, {style:style}).addTo(map);</code></pre></div>
                         Please make sure to <b>(1) include the <code>data.js</code> file in your lab folder and add the line to 'cite' the data in the head section</b>, and <b>(2) add the <code>getColor</code> and <code>style</code> functions</b> in your html document to symbolize the map in graduated colors (you may copy and paste the corresponding portions from <a href="https://neiugis.github.io/lab3" target="_blank">Lab 3</a>). </li>
                                     
                         <li>Adding legend for the choropleth map is the same as what we did in Lab 3. Please copy and paste the corresponding portions to add the legend if you are reusing the same data. </li>
@@ -238,12 +335,35 @@ map.on('overlayadd', function(eventLayer){
           <footer>
             <div class="wrap">
 
-              <p>Copyright &copy; Ting Liu 2023</p>
+              <p>Copyright &copy; Ting Liu 2024</p>
             <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
             </div>
           </footer>
 
             <script src="prism.js"></script>
+        
+        <script>
+            function copyToClipboard(button) {
+                // Find the code block within the same container as the button
+                const codeContainer = button.closest('.code-container');
+                const codeText = codeContainer.querySelector('pre code').innerText;
+
+                // Copy the code text to the clipboard
+                navigator.clipboard.writeText(codeText).then(() => {
+                    // Change the button text to "Copied!" on success
+                    button.innerHTML = ' <i class="fa-solid fa-check"></i> <strong>Copied!</strong>';
+                    button.style.backgroundColor = '#6cbf43'; // Green background for success
+
+                    // Reset the button text and background color after 2 seconds
+                    setTimeout(() => {
+                        button.innerHTML = '<i class="fa-regular fa-copy"></i> <strong>Copy code</strong>';
+                        button.style.backgroundColor = '#566573'; // Reset to original color
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Failed to copy:', err);
+                });
+            }
+            </script>
 
      </body>
 </html>
