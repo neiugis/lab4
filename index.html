@@ -265,20 +265,30 @@ var boroughs = L.geoJson(data, {style:style}).addTo(map);</code></pre></div>
                     <p>Once the layers are added, we could set up the control in Leaflet easily.</p>
                     <ul>
                     <li>We will create two objects: one contains the base layers and one contains the overlays. I used <code>basemaps</code> and <code>overlaymaps</code> as the object names. You may use different names for the objects. Place the following lines AFTER adding the legend.
-                     <pre><code class="language-javascript">var basemaps = {
+                     <div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                               
+                               <pre><code class="language-js">
+var basemaps = {
     "Light Canvas": canvas,
     "Satellite Imagery": imagery
 };
 
 var overlaymaps = {
     "London Boroughs": boroughs
-};</code></pre>
+};</code></pre></div>
                         A closer look at the syntax here: these are just simple objects with key/value pairs. The key (e.g.  <code>"Light Canvas"</code>) sets the <b>display name</b> for the layer in the map control, while the corresponding value (e.g. <code>canvas</code>) is a <b>reference to the layer by variable name</b>.
                         
                         <br>You may style the keys/display names using HTML, e.g., change the color, font, etc.</li>
                     
                     <li>Now, let's create a Leaflet <a href="https://leafletjs.com/reference.html#control-layers" target="_blank">Layers Control</a> and add it to the map (following the basemaps and overlay maps):
-                        <pre><code class="language-javascript">L.control.layers(basemaps, overlaymaps).addTo(map);</code></pre>
+                        <div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                               
+                               <pre><code class="language-js">
+L.control.layers(basemaps, overlaymaps).addTo(map);</code></pre></div>
                         Note the <code>L.control.layers</code> function takes the first object as the base layers and the second object as the overlays.</li>
                         <p>You will find the control button at the upper-right corner of the map area, which will allow you to switch between the basemaps, and turn on/off the overlays: (<a href="https://raw.githubusercontent.com/neiugis/lab4/gh-pages/map/control.html" target="_blank">sample code</a>)</p>
                         <iframe  src="map/control.html" width=95% height=570 frameborder=0></iframe>
@@ -291,7 +301,12 @@ var overlaymaps = {
                     <p>The layers control worked fine so far. But did you notice something about the legend? The legend stays there even when we turn off the layer. Next, we will add a few more lines to control the legend so that it goes with the geojson layer.</p>
                     <ul>
                     <li>We use two functions here, one for removing the legend when the layer is removed and one for adding the legend when the layer is added. Place the lines AFTER the layer control. 
-                        <pre><code class="language-javascript">// Removing the legend when the layer is removed
+                        <div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                               
+                               <pre><code class="language-js">
+// Removing the legend when the layer is removed
 map.on('overlayremove', function(eventLayer){
   if (eventLayer.name == 'London Boroughs'){ // We use the key/display name to refer to the layer
     map.removeControl(legend); // legend is the variable name of the layer legend
@@ -303,7 +318,7 @@ map.on('overlayadd', function(eventLayer){
   if (eventLayer.name == 'London Boroughs'){
     legend.addTo(map);
   }
-});</code></pre></li>
+});</code></pre></div></li>
                     <li>Please read the comments for explanations, which will help you modify the code for your own map.</li>
                     <li>The final version!! (<a href="https://raw.githubusercontent.com/neiugis/lab4/gh-pages/map/map4.html" target="_blank">sample code</a>)</li>
                     
@@ -324,7 +339,12 @@ map.on('overlayadd', function(eventLayer){
                         <li>Host your web page via GitHub (Make sure to rename the html file as <code>index.html</code> and upload any associated data files to the repository!!!) and submit the url through <a href="https://neiu.desire2learn.com/d2l/lms/dropbox/admin/mark/folder_submissions_users.d2l?db=203220&ou=3007900" target="_blank">D2L</a>. </li><br>
                         <li><i>Something Simple and Fun:</i> If you are interested in adding a custom web page title icon, you may simply get your icon image (e.g., from <a href="https://www.flaticon.com/" target="_blank">here</a>) and save it to the same folder as the html document. 
                             <br>Then, place the following line in the <code>head</code> section (CHANGE the image file name to match yours).
-                        <pre><code class="language-html">&lt;link rel=&quot;icon&quot; href=&quot;favicon.png&quot; &gt;</code></pre></li>
+                        <div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                               
+                            <pre><code class="language-js">
+&lt;link rel=&quot;icon&quot; href=&quot;favicon.png&quot; &gt;</code></pre></div></li>
                     </ul>
 
             <br><br>
