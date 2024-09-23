@@ -214,7 +214,7 @@
                   <h3><i class="fa fa-paint-brush"></i> Add More Layers</h3>
                     <p>In Leaflet, there are <b>TWO types of layers</b> which allow different types of controls: 
                         <br>(1) <b>base layers</b> that are mutually exclusive (only one can be visible on your map at a time), <i>e.g. tile layers</i>  (<mark>you could only <b>switch between</b> base layers</mark>)
-                        <br>(2) <b>overlay layers</b>, which are all the other layers, <i>e.g., geojson</i>, you put over the base layers (<mark>you may <b>turn on and off</b> overlay layers</mark>)
+                        <br>(2) <b>overlay layers</b>, which are all the other layers, <i>e.g., geojson</i>, you put over the base layers (<mark>you may <b>turn on or off</b> overlay layers, but multiple overlay layers can be visible at the same time.</mark>)
                         <br><br>As an example, I will use two base layers (a light canvas and a satellite imagery) to switch between, and an overlay geojson layer to turn on and off. For the deliverables, you will use at least two overlay layers.</p>
                     <ul>
                     <li>We already have the Carto light canvas as the basemap. So we will need another tile layer. However, it is a little more than just adding another L.tileLayer to make the layers control work. We need to create two variables for the two tile layers so that we could refer to them later. 
@@ -237,19 +237,19 @@ var imagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/
                            For the light canvas layer, we basically assigned the tile layer to a variable called <code>canvas</code>. You are free to name the variable anything else as long as it is unique. Just make sure to refer to the exact variable name later. Check out <a href="https://www.w3schools.com/js/js_variables.asp" target="_blank">here</a> for more on JS variables.
                            </li>
                         <li>And we created another tile layer using the ESRI world imagery and assigned it to a variable called <code>imagery</code>.</li>
-                        <li>We ONLY used the <code>addTo(map)</code> method for the <code>canvas</code> layer to use it as the <b>default</b> base map. Therefore, you should still see the Carto ligth basemap displayed in the browser.</li></ul>
+                        <li>You don't need to add both tile layers to the map, as only the most recently added layer will be visible. In this case, we ONLY used the <code>addTo(map)</code> method for the <code>canvas</code> layer to set it as the <b>default</b> base map. As a result, you should still see the Carto Light basemap displayed in the browser.</li></ul>
                         </li>
                         
-                        <li>Next, I will add the geojson layer I have used in lab 3 (london boroughs <a href="https://raw.githubusercontent.com/neiugis/lab4/gh-pages/map/data.js" target = "_blank">data.js</a>). However, we will also need to assign the layer to a variable to be used later:
+                        <li>Next, I will add the geojson layer (following the tile layers) from lab 3 (london boroughs <a href="https://raw.githubusercontent.com/neiugis/lab4/gh-pages/map/data.js" target = "_blank">data.js</a>). However, we will also need to assign the layer to a variable to be used later:
                         <div class="code-container">
                                
                             <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
                                
                                <pre><code class="language-js">
-var boroughs = L.geoJson(data, {style:style}).addTo(map);</code></pre></div>
-                        Please make sure to <b>(1) include the <code>data.js</code> file in your lab folder and add the line to 'cite' the data in the head section</b>, and <b>(2) add the <code>getColor</code> and <code>style</code> functions</b> in your html document to symbolize the map in graduated colors (you may copy and paste the corresponding portions from <a href="https://neiugis.github.io/lab3" target="_blank">Lab 3</a>). </li>
+var boroughs = L.geoJson(data, {style:style}).addTo(map);</code></pre></div></li>
+                        <li>Please make sure to <b>(1) include the <code>data.js</code> file in your lab folder and add the line to 'cite' the data in the head section</b>, and <b>(2) add the <code>getColor</code> and <code>style</code> functions</b> in your html document to symbolize the map in graduated colors (you may copy and paste the corresponding portions from <a href="https://neiugis.github.io/lab3" target="_blank">Lab 3</a>). </li>
                                     
-                        <li>Adding legend for the choropleth map is the same as what we did in Lab 3. Please copy and paste the corresponding portions to add the legend if you are reusing the same data. </li>
+                        <li><b>Adding legend</b> for the choropleth map is the same as what we did in Lab 3. Please copy and paste the corresponding portions to add the legend if you are reusing the same data. </li>
                         
                         <li>This is what I have so far (<a href="https://raw.githubusercontent.com/neiugis/lab4/gh-pages/map/layers.html", target="_blank">sample code</a>):
                             <iframe src="map/layers.html" width=95% height=570 frameborder=0></iframe>
