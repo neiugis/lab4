@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -10,14 +11,16 @@
          <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
            crossorigin=""></script>
-
-         <style type="text/css">
+        
+        
+        <script type="text/javascript" src="data.js"></script>
+        
+        
+        <style type="text/css">
           html, body { margin: 0; padding: 0; height: 100%; }
           #map { min-height: 100%; }
         </style>
-
-        <script type="text/javascript" src="data.js"></script>
-
+        
         <style>
           /* Optional: adjust the values below to change the appearance of the legend */
           .legend {
@@ -28,8 +31,8 @@
               border-radius: 5px;
           }
 
-           /* Optional: adjust the values below to change the appearance of the legend color boxes */
-           .legend i {
+          /* Optional: adjust the values below to change the appearance of the legend color boxes */
+          .legend i {
               width: 18px;
               height: 18px;
               float: left;
@@ -50,25 +53,27 @@
               zoom: 10
           });
 
-          var canvas = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
-             attribution: 'Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL.',
-             maxZoom: 11,
-             minZoom: 5
-           }).addTo(map);
 
-           var imagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-              attribution: 'Tiles © Esri — Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
-          });
+        var canvas = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+           attribution: 'Tiles © Esri — Esri, DeLorme, NAVTEQ',
+           maxZoom: 11,
+           minZoom: 5
+        }).addTo(map);
 
-           function getColor(value) {
-              return value > 139 ? '#54278f':
-                     value > 87  ? '#756bb1':
-                     value > 53  ? '#9e9ac8':
-                     value > 32  ? '#cbc9e2':
-                                   '#f2f0f7';
-          }
+        var imagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            attribution: 'Tiles © Esri — Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+        });
+            
+            
+        function getColor(value) {
+            return value > 139 ? '#54278f':
+                   value > 87  ? '#756bb1':
+                   value > 53  ? '#9e9ac8':
+                   value > 32  ? '#cbc9e2':
+                                 '#f2f0f7';
+        }
 
-          function style(feature){
+        function style(feature){
             return {
                 fillColor: getColor(feature.properties.pop_den),   // pop_den is the field name for the population density data
                 weight: 2,
@@ -78,19 +83,21 @@
             };
         }
 
+            
         var boroughs = L.geoJson(data, {style:style}).addTo(map);
-
+            
+        
         var legend = L.control({position: 'bottomright'}); // Try the other three corners if you like.
 
         legend.onAdd = function (map) {
 
             var div = L.DomUtil.create('div', 'legend'),
-                grades = [0, 32, 53, 87, 139]; // The break values to define the intervals of population, note we begin from 0 here
+                grades = [0, 32, 53, 87, 139]; // The break values that define the intervals, note we begin from 0 here
 
-            div.innerHTML = '<b>Population Density <br> 2011 <br></b>'; // The legend title (HTML-based), in this case it's Population Density 2011
+            div.innerHTML = '<b>Population Density <br> 2011 <br></b>'; // The legend title, written in HTML
 
-            // Loop through our the classes and generate a label with a color box for each interval.
-            // If you are creating a choropleth map, you DO NOT need to change lines below.
+            // Loop through the classes and generate a label with a color box for each interval.
+            // If you are creating a choropleth map, you DO NOT need to change the lines below.
             for (var i = 0; i < grades.length; i++) {
                 div.innerHTML +=
                 '<i style="background:' + getColor(grades[i] + 1) + '"></i>' +
@@ -100,19 +107,30 @@
             return div;
         };
 
-        legend.addTo(map);
+        legend.addTo(map);   
 
+        var nasa = L.tileLayer.wms('https://gibs.earthdata.nasa.gov/wms/epsg3857/best/wms.cgi?', {
+            layers: 'Land Surface Temperature',
+            format: 'image/png',
+            transparent: true,
+            opacity: 0.6,
+            attribution: 'Imagery courtesy of NASA EOSDIS GIBS',
+            
+        }).addTo(map);
+            
         var basemaps = {
-            "Light Canvas": canvas,
+            "Light Gray Canvas": canvas,
             "Satellite Imagery": imagery
         };
 
         var overlaymaps = {
-            "London Boroughs": boroughs
+            "London Boroughs": boroughs,
+            "NASA Imagery": nasa
         };
-
+            
         L.control.layers(basemaps, overlaymaps).addTo(map);
-
+            
+                        
         // Removing the legend when the layer is removed
         map.on('overlayremove', function(eventLayer){
           if (eventLayer.name == 'London Boroughs'){ // We use the key/display name to refer to the layer
