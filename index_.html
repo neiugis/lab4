@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)https://guides.github.com/introduction/git-handbook/ -->
+<html lang="en">
+    <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+      <title>Lab 4 - Layers Control </title>
+
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+
+      <link rel="icon" href="layers.png" >
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+      <link rel="stylesheet" href="gridism.css">
+      <link rel="stylesheet" href="markdown.css">
+      <link rel="stylesheet" href="octicons.css">
+      <link href="main.css" rel="stylesheet">
+      <link href="pygments.css" rel="stylesheet">
+
+      <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+      <link href="prism.css" rel="stylesheet" />
+
+      <script type="text/javascript" async="" src="ga.js"></script><script src="jquery.js" type="text/javascript"></script>
+      <script src="snap.svg-min.js" type="text/javascript"></script>
+      <script src="application.js" type="text/javascript"></script>
+
+      <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-3769691-29']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+      </script>
+        
+        <style>
+            .code-container {
+            position: relative; /* Allows the button to be positioned inside the container */
+            background-color: #f7f7f8;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            padding: 10px;
+            margin-bottom: 20px;
+            font-family: 'Courier New', Courier, monospace;
+            overflow: auto; /* Ensures scroll if content exceeds width */
+        }
+
+        /* Style for the pre and code block */
+        .code-container pre {
+            margin: 0;
+            background: none;
+            border: 1px solid #f7f7f8;
+            padding: 0px 0 0 0; /* Add padding to the top for the button */
+            white-space: pre-wrap;  /* Enable line wrapping */
+            word-wrap: break-word;  /* Allow breaking long words */
+            overflow-wrap: break-word; /* Break long words in modern browsers */
+            font-size: 14px;
+            overflow-x: auto; /* Allow horizontal scroll if needed */
+        }
+
+        /* Style for the copy button */
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #566573;
+            color: #fdfefe;
+            border: none;
+            padding: 4px 8px;
+            font-size: 12px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Tooltip styling */
+        .copy-btn[data-tooltip]::after {
+            content: attr(data-tooltip); /* Display the tooltip text */
+            position: absolute;
+            bottom: 125%; /* Position above the button */
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #333; /* Dark background for the tooltip */
+            color: #fff; /* White text color */
+            padding: 5px 8px;
+            border-radius: 5px;
+            font-size: 12px;
+            white-space: nowrap;
+            opacity: 0; /* Initially hidden */
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 100; /* Ensure it appears above other elements */
+        }
+
+        /* Show the tooltip on hover */
+        .copy-btn:hover::after {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Icon inside the button */
+        .copy-btn i {
+            margin-right: 5px; /* Space between the icon and text */
+        }
+
+        /* Change background color when hovering over the button */
+        .copy-btn:hover {
+            background-color: #566573;
+        }
+        
+        </style>
+
+    </head>
+
+    <body style="background-color:#2471A3">
+
+        <article class="full">
+            <div class="article-heading js-article-heading js-geopattern" style="background-color:#2471A3">
+                <div class="wrap">
+                  
+                   <h1>Lab 4. Layers Control <i class="fa fa-leaf"></i></h1> 
+                  <h3 style="color:#F6F20D"><b><i class="fa fa-spinner fa-spin"></i>  Due: 11:59 pm, Wednesday, 10/7</b></h3>
+                </div>
+            </div>
+
+            <div class="wrap">
+                <div class="toc-wrapper"><ol class="toc js-toc sticky"></ol></div>
+
+                <div class="markdown-body content-body">
+
+
+                  <p><a id="overview" title="Overview" class="toc-item"></a></p>
+                  <h3><i class="fa fa-paint-brush"></i> Overview</h3>
+                  <p><i class="fa fa-spinner fa-spin"></i>  This lab will introduce Leaflet layers control to allow users to easily <b>switch between different layers </b>on your map. Scroll down to the <a href="#final">bottom</a> for an example.</p>
+                    <p><i class="fa fa-spinner fa-spin"></i>  Please read the instructions carefully (including the explanations of each step) and complete the assignment in the <a href="#deliverable">Deliverables</a> section. </p>
+
+
+
+                  <p><a id="prep" title="Add Basemap" class="toc-item"></a></p>
+                  <h3><i class="fa fa-paint-brush"></i> Add Basemap (<span style="color:darkviolet ">Full Screen Mode</span>)</h3>
+                    <p>
+        So far, we have been defining the height of the basemap. There is actually a way to make it <b>"fullscreen"</b> (the height of the map area will adjust according to the browser's window size, as apposed to using a fixed height). So let's do this!</p>
+                  <ul>
+                         <li>Before start, create a <b>new file folder</b> (e.g., lab4) for saving the html document and associated data file(s).</li>
+
+                          <li>Open your <b>code editor</b> and insert the following lines of code. 
+                              <br><i>Important</i>: Notice that we are <b>not</b> defining the height of the <code>div</code> in the <code>body</code> section just yet, so the map <b>will not</b> display at this stage. We will add more elements shortly to make the map appear. <br>
+
+                               <div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                               
+                               <pre><code class="language-js">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;Lab 4&lt;/title&gt;
+
+        &nbsp;&lt;link&nbsp;rel=&quot;stylesheet&quot;&nbsp;href=&quot;https://unpkg.com/leaflet@1.9.4/dist/leaflet.css&quot;
+        &nbsp;&nbsp;&nbsp;integrity=&quot;sha256&#45;p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=&quot;
+        &nbsp;&nbsp;&nbsp;crossorigin=&quot;&quot;/&gt;
+
+        &nbsp;&lt;script&nbsp;src=&quot;https://unpkg.com/leaflet@1.9.4/dist/leaflet.js&quot;
+        &nbsp;&nbsp;&nbsp;integrity=&quot;sha256&#45;20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=&quot;
+        &nbsp;&nbsp;&nbsp;crossorigin=&quot;&quot;&gt;&lt;/script&gt;
+
+    &lt;/head&gt;
+
+    &lt;body&gt;
+        &lt;div id=&quot;map&quot;&gt;&lt;/div&gt;
+
+        &lt;script type=&quot;text/javascript&quot;&gt;
+
+          var map = L.map('map', {
+              center: [51.48,-0.07],
+              zoom: 10
+          });
+
+         L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+           attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
+           maxZoom: 11,
+           minZoom: 5
+         }).addTo(map);
+
+        &lt;/script&gt;
+   &lt;/body&gt;
+&lt;/html&gt;
+</code></pre></div></li>
+                      
+        
+        
+        <li>Next, in the <code>head</code> section of your HTML, add the following lines of code to define the container's style, which will make the map display in fullscreen. 
+         <div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                               
+                               <pre><code class="language-js">
+&lt;style type=&quot;text/css&quot;&gt;
+  html, body { margin: 0; padding: 0; height: 100%; }
+  #map { min-height: 100%; }
+&lt;/style&gt;</code></pre></div>
+        In this step, we defined the height and margins of the webpage and the div container (<code>#map</code>, which is <i>the ID for the map container</i>). This setup is essential for creating fullscreen mode.
+            <br>Feel free to ask if you need clarification. </li>
+
+                      
+           <li>Once you have done, save the file as <code>map4.html</code> in your lab 4 folder. I will again map London as an example. Before moving on, double-check that the <b>fullscreen</b> mode is working correctly. </li>   
+          </ul>
+
+
+
+                <p><a id="layer" title="Add More Layers" class="toc-item"></a></p>
+                  <h3><i class="fa fa-paint-brush"></i> Add More Layers</h3>
+                    <p>In Leaflet, there are <b>TWO types of layers</b> which allow different types of controls: 
+                        <br>(1) <b>base layers</b> that are mutually exclusive (only one can be visible on your map at a time), <i>e.g. tile layers</i>  (<mark>you could only <b>switch between</b> base layers</mark>)
+                        <br>(2) <b>overlay layers</b>, which are all the other layers, <i>e.g., geojson</i>, you put over the base layers (<mark>you may <b>turn on or off</b> overlay layers, but multiple overlay layers can be visible at the same time.</mark>)
+                        <br><br>As an example, I will use two base layers (a light gray canvas and a satellite imagery) to switch between, and two overlay layers to turn on and off: a <b>geojson</b> layer and a <b>web map service (WMS)</b> layer. For the deliverables, you will do the same.</p>
+                    <ul>
+                    <li>We already have the Esri light gray canvas as the basemap. So we will need another tile layer. However, it is a little more than just adding another L.tileLayer to make the layers control work. We need to create two variables for the two tile layers so that we could refer to them later. 
+                        <br><b>MODIFY</b> the tile layer portion to:
+<div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                               
+                               <pre><code class="language-js">
+var canvas = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+   attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
+   maxZoom: 11,
+   minZoom: 5
+}).addTo(map);
+
+var imagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+});</code></pre></div>
+                       <ul><li>
+                           For the light gray canvas layer, we basically assigned the tile layer to a variable called <code>canvas</code>. You are free to name the variable anything else as long as it is unique. Just make sure to refer to the exact variable name later. Read more about <a href="https://www.w3schools.com/js/js_variables.asp" target="_blank">JS variables</a>.
+                           </li>
+                        <li>And we created another tile layer using the ESRI world imagery and assigned it to a variable called <code>imagery</code>.</li>
+                        <li>You do not need to add both tile layers to the map, as only the most recently added layer will be visible. In this case, we ONLY used the <code>addTo(map)</code> method for the <code>canvas</code> layer to set it as the <b>default</b> base map. As a result, you should still see the Esri Light Gray basemap displayed in the browser.</li></ul>
+                        </li>
+                        
+                        <li>Next, I will add the geojson layer (following the tile layers) from lab 3 (london boroughs <a href="https://raw.githubusercontent.com/neiugis/lab4/gh-pages/map/data.js" target = "_blank">data.js</a>). However, we will also need to assign the layer to a variable to be used later:
+                        <div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                               
+                               <pre><code class="language-js">
+var boroughs = L.geoJson(data, {style:style}).addTo(map);</code></pre></div></li>
+                        <li>Save the <code>data.js</code> file into your lab 4 folder, and add this line to the <code>head</code> section so the page can read it:
+                     <div class="code-container">
+
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+
+                               <pre><code class="language-js">
+&lt;script type=&quot;text/javascript&quot; src=&quot;data.js&quot;&gt;&lt;/script&gt;</code></pre></div>
+                        </li>
+
+                        <li>Next, we need the <code>getColor</code> and <code>style</code> functions to symbolize the map in graduated colors. This is the same pattern we used in <a href="https://neiugis.github.io/lab3" target="_blank">Lab 3</a>. It is repeated here so that you do not have to go back and hunt for it. Place these BEFORE the geojson line above.
+                     <div class="code-container">
+
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+
+                               <pre><code class="language-js">
+function getColor(value) {
+    return value &gt; 139 ? &#x27;#54278f&#x27;:
+           value &gt; 87  ? &#x27;#756bb1&#x27;:
+           value &gt; 53  ? &#x27;#9e9ac8&#x27;:
+           value &gt; 32  ? &#x27;#cbc9e2&#x27;:
+                         &#x27;#f2f0f7&#x27;;
+}
+
+function style(feature){
+    return {
+        fillColor: getColor(feature.properties.pop_den),   // pop_den is the field name for the population density data
+        weight: 2,
+        opacity: 1,
+        color: &#x27;gray&#x27;,
+        fillOpacity: 0.9
+    };
+}</code></pre></div>
+                        <ul><li>If you are using <b>your own data</b>, change <code>pop_den</code> to your field name, and change the five break values and colors to match your map.</li>
+                        <li>If you are using the London boroughs <code>data.js</code>, you may leave this exactly as it is.</li></ul>
+                        </li>
+                                    
+                        <li><b>Adding the legend</b> works the same way it did in Lab 3, and it is also repeated here. First, add this style block to the <code>head</code> section to control how the legend looks:
+                     <div class="code-container">
+
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+
+                               <pre><code class="language-js">
+&lt;style&gt;
+  /* Optional: adjust the values below to change the appearance of the legend */
+  .legend {
+      padding: 6px 8px;
+      line-height: 18px;
+      background: rgba(255,255,255,0.9);
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      border-radius: 5px;
+  }
+
+  /* Optional: adjust the values below to change the appearance of the legend color boxes */
+  .legend i {
+      width: 18px;
+      height: 18px;
+      float: left;
+      margin-right: 8px;
+      opacity: 0.7;
+  }
+&lt;/style&gt;</code></pre></div>
+                        Then place the following AFTER the geojson layer:
+                     <div class="code-container">
+
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+
+                               <pre><code class="language-js">
+var legend = L.control({position: &#x27;bottomright&#x27;}); // Try the other three corners if you like.
+
+legend.onAdd = function (map) {
+
+    var div = L.DomUtil.create(&#x27;div&#x27;, &#x27;legend&#x27;),
+        grades = [0, 32, 53, 87, 139]; // The break values that define the intervals, note we begin from 0 here
+
+    div.innerHTML = &#x27;&lt;b&gt;Population Density &lt;br&gt; 2011 &lt;br&gt;&lt;/b&gt;&#x27;; // The legend title, written in HTML
+
+    // Loop through the classes and generate a label with a color box for each interval.
+    // If you are creating a choropleth map, you DO NOT need to change the lines below.
+    for (var i = 0; i &lt; grades.length; i++) {
+        div.innerHTML +=
+        &#x27;&lt;i style=&quot;background:&#x27; + getColor(grades[i] + 1) + &#x27;&quot;&gt;&lt;/i&gt;&#x27; +
+        grades[i] + (grades[i + 1] ? &#x27;&amp;ndash;&#x27; + grades[i + 1] + &#x27;&lt;br&gt;&#x27; : &#x27;+&#x27;);
+    }
+
+    return div;
+};
+
+legend.addTo(map);</code></pre></div>
+                        <ul><li>The <code>grades</code> array holds the same break values you used in <code>getColor</code>. If you changed the breaks above, change them here too, or the legend will not match the map.</li>
+                        <li>Change the legend title in the <code>div.innerHTML</code> line to describe your own data.</li></ul>
+                        </li>
+                        
+                        <li>This is what I have so far (<a href="https://raw.githubusercontent.com/neiugis/lab4/gh-pages/map/layers.html", target="_blank">sample code</a>):
+                            <iframe src="map/layers.html" width=95% height=570 frameborder=0></iframe>
+                            Please do not hesitate to ASK if you need any help here.
+                        </li>
+                        <li>For your deliverable, you will need a <b>second overlay layer</b>. Instead of another geojson file, we will add a layer from a <b>web map service</b>. The next section explains what that is and how to find one. </li>
+                    
+                    </ul>
+                   
+
+                    
+                    
+                  <p><a id="wms" title="Add a WMS Layer" class="toc-item"></a></p>
+                  <h3><i class="fa fa-paint-brush"></i> Add a WMS Layer</h3>
+                    <p>Every layer we have added so far has been one of two things: a <b>tile layer</b>, which is a set of map images that were drawn ahead of time, or a <b>geojson file</b>, which you downloaded and saved into your own folder.</p>
+                    <p>A <b>WMS</b> (Web Map Service) is a third kind. The server draws the map image at the moment you ask for it, for the area and the size you request. You do not download any data. You do not store any file. You send a request, and the server sends back a picture.</p>
+                    <p>This matters because many government and research agencies publish their data this way and in no other way. If you want that data on your map, WMS is how you reach it. In this section we will add a layer from <b>NASA</b>. The same steps work for any other agency service, such as the USGS National Map.</p>
+                    <ul>
+                    <li><b>Step 1. Find the endpoint.</b> The <i>endpoint</i> is the base web address of the service. NASA lists theirs on the <a href="https://nasa-gibs.github.io/gibs-api-docs/gis-usage/" target="_blank">GIS Usage</a> page of the GIBS documentation. There are four, one for each map projection:
+                     <div class="code-container">
+
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+
+                               <pre><code class="language-js">
+https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi
+https://gibs.earthdata.nasa.gov/wms/epsg3857/best/wms.cgi
+https://gibs.earthdata.nasa.gov/wms/epsg3413/best/wms.cgi
+https://gibs.earthdata.nasa.gov/wms/epsg3031/best/wms.cgi</code></pre></div>
+                        Look at the numbers. Those are <b>EPSG codes</b>, the same projection codes we discussed in class. <code>4326</code> is geographic latitude and longitude. <code>3857</code> is Web Mercator, which is the projection Leaflet draws in. We will use both, and the reason is in the next step.</li>
+
+                    <li><b>Step 2. Browse the layers in QGIS.</b> A service does not tell you its layer names from the web address alone. You have to ask it, and QGIS is the easiest way to look.
+                        <ul>
+                        <li>Open QGIS. Go to <b>Layer &gt; Add Layer &gt; Add WMS/WMTS Layer</b>, then click <b>New</b>.</li>
+                        <li>Give the connection a <b>Name</b> such as <code>NASA GIBS</code>, and paste the <b>epsg4326</b> endpoint from Step 1 into the <b>URL</b> box. Click <b>OK</b>.
+                            <br><img src="img/qgis_wms_connection.png" alt="QGIS new WMS connection dialog with a name and URL entered" width="75%"></li>
+                        <li>Back in the previous window, click <b>Connect</b>. You will now see the list of available layers, grouped into categories such as <i>Land Surface Reflectance</i> and <i>Land Cover</i>.
+                            <br><img src="img/qgis_wms_layerlist.png" alt="QGIS WMS layer list showing categories that can be expanded" width="75%"></li>
+                        <li><b>Important</b>: the categories are folders, not layers. <mark>You must click the small arrow to <b>expand</b> a category and select a layer <b>inside</b> it.</mark> Selecting the category itself will not work.</li>
+                        <li>Select a layer that interests you and click <b>Add</b>. Confirm that it actually draws on the QGIS map. If a layer looks empty, it may have no data for today's date. Choose a different one.</li>
+                        <li><b>Write down the exact layer name.</b> This is the one piece of information you need. It is case sensitive, and a single wrong character will produce a blank map later.</li>
+                        <li><i>Why the 4326 endpoint?</i> NASA's documentation explains this. The 3857 endpoint returns the same layers as one flat list of more than a thousand entries, which is very hard to read. The 4326 endpoint returns them grouped by category. We browse with 4326 because it is easier to read.</li>
+                        </ul></li>
+
+                    <li><b>Step 3. Change the endpoint to 3857.</b> When you move to Leaflet, change <code>epsg4326</code> to <code>epsg3857</code> in the web address. Everything else stays the same.
+                        <br>This is a one character change, and it is worth understanding. You browsed in geographic coordinates because the list was easier to read. You request in Web Mercator because that is the projection your Leaflet map uses. Asking a service for the wrong projection is one of the most common reasons a web map layer does not line up.</li>
+
+                    <li><b>Step 4. Add the layer to your map.</b> Place the following AFTER your geojson layer. Replace <code>PASTE_LAYER_NAME_HERE</code> with the layer name you wrote down in Step 2.
+                     <div class="code-container">
+
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+
+                               <pre><code class="language-js">
+var nasa = L.tileLayer.wms('https://gibs.earthdata.nasa.gov/wms/epsg3857/best/wms.cgi?', {
+    layers: 'PASTE_LAYER_NAME_HERE',
+    format: 'image/png',
+    transparent: true,
+    opacity: 0.6,
+    attribution: 'Imagery courtesy of NASA EOSDIS GIBS'
+});</code></pre></div>
+                        <ul>
+                        <li><code>L.tileLayer.wms</code> is the same kind of thing as <code>L.tileLayer</code>, with a few extra options. Notice that we assigned it to a variable, <code>nasa</code>, exactly as we did for the other layers.</li>
+                        <li><code>layers</code> is the layer name from Step 2. This is the option students most often get wrong.</li>
+                        <li><code>transparent: true</code> tells the server to leave the empty areas see through, so your other layers remain visible underneath. Try changing it to <code>false</code> to see the difference.</li>
+                        <li><code>opacity</code> controls how strongly the layer shows, as a value between 0 and 1.</li>
+                        </ul></li>
+
+                    <li><b>If the layer does not appear</b>, check these four things in order:
+                        <ul>
+                        <li>Is the address <code>https</code> and not <code>http</code>? GitHub Pages will block an <code>http</code> request and will not warn you.</li>
+                        <li>Is the layer name spelled exactly as it appeared in QGIS, including capital letters and underscores?</li>
+                        <li>Does the address end with a question mark, as shown above?</li>
+                        <li>Did the layer have data for the current date when you checked it in QGIS?</li>
+                        </ul>
+                        Many NASA layers change from day to day. If you want a specific date, add a <code>time</code> option inside the same set of curly braces:
+                     <div class="code-container">
+
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+
+                               <pre><code class="language-js">
+    time: '2026-09-01'</code></pre></div></li>
+                    </ul>
+
+
+
+                  <p><a id="control" title="Layers Control" class="toc-item"></a></p>
+                  <h3><i class="fa fa-paint-brush"></i> Layers Control</h3>
+                    <p>Once the layers are added, we could set up the control in Leaflet easily.</p>
+                    <ul>
+                    <li>We will create two objects: one contains the base layers and one contains the overlays. I used <code>basemaps</code> and <code>overlaymaps</code> as the object names. You may use different names for the objects. Place the following lines AFTER adding the legend.
+                     <div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                               
+                               <pre><code class="language-js">
+var basemaps = {
+    "Light Gray Canvas": canvas,
+    "Satellite Imagery": imagery
+};
+
+var overlaymaps = {
+    "London Boroughs": boroughs,
+    "NASA Imagery": nasa
+};</code></pre></div>
+                        A closer look at the syntax here: these are just simple objects with key/value pairs. The key (e.g.  <code>"Light Gray Canvas"</code>) sets the <b>display name</b> for the layer in the map control, while the corresponding value (e.g. <code>canvas</code>) is a <b>reference to the layer by variable name</b>.
+                        
+                        <br>You may style the keys/display names using HTML, e.g., change the color, font, etc.</li>
+                    
+                    <li>Now, let's create a Leaflet <a href="https://leafletjs.com/reference.html#control-layers" target="_blank">Layers Control</a> and add it to the map (following the basemaps and overlay maps):
+                        <div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                               
+                               <pre><code class="language-js">
+L.control.layers(basemaps, overlaymaps).addTo(map);</code></pre></div>
+                        Note the <code>L.control.layers</code> function takes the first object as the base layers and the second object as the overlays. You will have to follow this order even if you use different object names.</li>
+                        <p>You will find the control button at the upper-right corner of the map area, which will allow you to switch between the basemaps, and turn on/off the overlays: (<a href="https://raw.githubusercontent.com/neiugis/lab4/gh-pages/map/control.html" target="_blank">sample code</a>)</p>
+                        <iframe  src="map/control.html" width=95% height=570 frameborder=0></iframe>
+                    </ul>
+                    
+                    
+                    
+                  <p><a id="legend" title="Final Tweak" class="toc-item"></a></p>
+                  <h3><i class="fa fa-paint-brush"></i> Final Tweak</h3>
+                    <p>The layers control worked fine so far. But did you notice something about the legend? The legend stays there even when we turn off the layer. Next, we will add a few more lines of code to control the legend so that it goes with the geojson layer.</p>
+                    <ul>
+                    <li>We use two functions here, one for removing the legend when the layer is removed and one for adding the legend when the layer is added. Place the lines AFTER the layer control. 
+                        <div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                               
+                               <pre><code class="language-js">
+// Removing the legend when the layer is removed
+map.on('overlayremove', function(eventLayer){
+  if (eventLayer.name == 'London Boroughs'){ // We use the key/display name to refer to the layer
+    map.removeControl(legend); // legend is the variable name of the layer legend
+  }
+});
+
+// Adding the legend when the layer is added
+map.on('overlayadd', function(eventLayer){
+  if (eventLayer.name == 'London Boroughs'){
+    legend.addTo(map);
+  }
+});</code></pre></div></li>
+                    <li>Please read the comments for explanations, which will help you modify the code for your own map.</li>
+                    <li>The final version!! (<a href="https://raw.githubusercontent.com/neiugis/lab4/gh-pages/map/map4.html" target="_blank">sample code</a>)</li>
+                    
+                    <iframe id="final" src="map/map4.html" width=95% height=570 frameborder=0></iframe></ul>
+
+                    
+                    
+                  <p><a id="deliverable" title="Deliverables" class="toc-item"></a></p>
+                  <h3><i class="fa fa-paint-brush"></i> Deliverables</h3>
+                    <ul><li>Create a layer control with <mark>TWO basemaps</mark> and <mark>TWO overlay layers</mark>, as described below.
+                        <ul>
+                            <li><mark>TWO basemaps, DIFFERENT from the ones I used in the example above (<b>6 pts</b>)</mark>. You may use any tile layers you like.</li>
+                            <li><mark>ONE geojson overlay showing a choropleth map (<b>7 pts</b>)</mark>. You may reuse your lab 3 data, or use the London boroughs <a href="https://raw.githubusercontent.com/neiugis/lab4/gh-pages/map/data.js" target="_blank">data.js</a> from the example above. Either choice receives full credit.</li>
+                            <li><mark>ONE WMS overlay (<b>6 pts</b>)</mark>. You may use the same NASA layer shown in the example above, or find a different one by following Steps 1 through 3 in the <a href="#wms">Add a WMS Layer</a> section. Either choice receives full credit.</li>
+                            <li>Make sure to <mark>control the legend</mark> properly (<b>3 pts</b>).</li>
+                            <li><mark>Add a heading</mark> to your map to describe what you are mapping (<b>3 pts</b>).</li>
+                            </ul></li>
+                        <li>Your final map will be graded based on its <b>overall accuracy (should meet all the requirements above)</b> and <b>cartographic layout/design</b>.</li>
+                        <li>Host your web page via GitHub (Make sure to rename the html file as <code>index.html</code> and upload any associated data files to the repository!!!) and submit the url through <a href="https://neiu.desire2learn.com/d2l/lms/dropbox/admin/mark/folder_submissions_users.d2l?db=285631&ou=3048274" target="_blank">D2L</a>. </li><br>
+                        <li><i>Something Simple and Fun:</i> If you are interested in adding a custom web page title icon, you may simply get your icon image (e.g., from <a href="https://www.flaticon.com/" target="_blank">here</a>) and save it to the same folder as the html document. 
+                            <br>Then, place the following line in the <code>head</code> section (CHANGE the image file name to match yours).
+                        <div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                               
+                            <pre><code class="language-js">
+&lt;link rel=&quot;icon&quot; href=&quot;favicon.png&quot; &gt;</code></pre></div></li>
+                    </ul>
+
+            <br><br>
+            </div>
+            </div>
+        </article>
+
+          <footer>
+            <div class="wrap">
+
+              <p>Copyright &copy; Ting Liu 2026</p>
+            <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+            </div>
+          </footer>
+
+            <script src="prism.js"></script>
+        
+        <script>
+            function copyToClipboard(button) {
+                // Find the code block within the same container as the button
+                const codeContainer = button.closest('.code-container');
+                const codeText = codeContainer.querySelector('pre code').innerText;
+
+                // Copy the code text to the clipboard
+                navigator.clipboard.writeText(codeText).then(() => {
+                    // Change the button text to "Copied!" on success
+                    button.innerHTML = ' <i class="fa-solid fa-check"></i> <strong>Copied!</strong>';
+                    button.style.backgroundColor = '#6cbf43'; // Green background for success
+
+                    // Reset the button text and background color after 2 seconds
+                    setTimeout(() => {
+                        button.innerHTML = '<i class="fa-regular fa-copy"></i> <strong>Copy code</strong>';
+                        button.style.backgroundColor = '#566573'; // Reset to original color
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Failed to copy:', err);
+                });
+            }
+            </script>
+
+     </body>
+</html>

@@ -1,0 +1,103 @@
+<!-- ============================================================
+     PASTE THIS SECTION INTO lab4/index.html
+     Place it AFTER the "Add More Layers" section (after the
+     closing </ul> near line 260) and BEFORE the
+     "Layers Control" section anchor (line 265).
+     ============================================================ -->
+
+<p><a id="wms" title="Add a WMS Layer" class="toc-item"></a></p>
+<h3><i class="fa fa-paint-brush"></i> Add a WMS Layer</h3>
+
+<p>Every layer we have added so far has been one of two things: a <b>tile layer</b>, which is a set of pre-drawn map images, or a <b>GeoJSON file</b>, which you downloaded and saved into your own folder.</p>
+
+<p>A <b>WMS</b> (Web Map Service) is a third kind. The server draws the map image at the moment you ask for it, using the area and the size you request. You do not download any data. You do not store any file. You send a request, and the server sends back a picture.</p>
+
+<p>This matters because many government and research agencies publish their data this way and in no other way. If you want that data on your map, WMS is how you reach it. In this section we will add a layer from <b>NASA</b>.</p>
+
+<ul>
+  <li><b>Step 1. Choose a service.</b> We will use NASA's Global Imagery Browse Services (GIBS), which publishes about one thousand satellite imagery layers. The same steps below work for any other agency service, such as the USGS National Map.</li>
+
+  <li><b>Step 2. Find the endpoint.</b> The <i>endpoint</i> is the base web address of the service. NASA lists theirs on the <a href="https://nasa-gibs.github.io/gibs-api-docs/gis-usage/" target="_blank">GIS Usage</a> page of the GIBS documentation. There are four, one for each map projection:
+    <div class="code-container">
+      <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+      <pre><code class="language-js">
+https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi
+https://gibs.earthdata.nasa.gov/wms/epsg3857/best/wms.cgi
+https://gibs.earthdata.nasa.gov/wms/epsg3413/best/wms.cgi
+https://gibs.earthdata.nasa.gov/wms/epsg3031/best/wms.cgi</code></pre></div>
+    Look at the numbers. Those are <b>EPSG codes</b>, the same projection codes we discussed in class. <code>4326</code> is geographic latitude and longitude. <code>3857</code> is Web Mercator, which is the projection Leaflet draws in. We will use both, and the reason is in the next step.</li>
+
+  <li><b>Step 3. Browse the layers in QGIS.</b> A service does not tell you its layer names from the web address alone. You have to ask it. QGIS is the easiest way to look.
+    <ul>
+      <li>Open QGIS. Go to <b>Layer &gt; Add Layer &gt; Add WMS/WMTS Layer</b>.</li>
+      <li>Click <b>New</b>. Give the connection a name such as <code>NASA GIBS</code>.</li>
+      <li>For the URL, paste the <b>epsg4326</b> endpoint from Step 2. Click <b>OK</b>, then <b>Connect</b>.</li>
+      <li>You will now see the list of available layers, grouped into categories such as Land Cover and Sea Surface Temperature.
+        <br><i>Why the 4326 endpoint?</i> NASA's documentation explains this. The 3857 endpoint returns the same layers as one flat list of over a thousand entries, which is very hard to read. The 4326 endpoint returns them grouped by category. We browse with 4326 because it is easier to read.</li>
+      <li>Pick a layer that interests you and click <b>Add</b>. Confirm that it actually draws on the QGIS map. If a layer looks empty, it may not have data for today's date. Choose a different one.</li>
+      <li><b>Write down the exact layer name.</b> This is the one piece of information you need. It is case sensitive, and a single wrong character will produce a blank map later.</li>
+    </ul>
+  </li>
+
+  <li><b>Step 4. Change the endpoint to 3857.</b> When you move to Leaflet, change <code>epsg4326</code> to <code>epsg3857</code> in the web address. Everything else stays the same.
+    <br>This is a one character change, and it is worth understanding. You browsed in geographic coordinates because the list was easier to read. You request in Web Mercator because that is the projection your Leaflet map uses. Asking a service for the wrong projection is one of the most common reasons a web map layer does not line up.</li>
+
+  <li><b>Step 5. Add the layer to your map.</b> Place the following AFTER your other layers. Replace <code>PASTE_LAYER_NAME_HERE</code> with the layer name you wrote down in Step 3.
+    <div class="code-container">
+      <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+      <pre><code class="language-js">
+var nasa = L.tileLayer.wms('https://gibs.earthdata.nasa.gov/wms/epsg3857/best/wms.cgi?', {
+    layers: 'PASTE_LAYER_NAME_HERE',
+    format: 'image/png',
+    transparent: true,
+    opacity: 0.6,
+    attribution: 'Imagery courtesy of NASA EOSDIS GIBS'
+});</code></pre></div>
+    <ul>
+      <li><code>L.tileLayer.wms</code> is the same kind of thing as <code>L.tileLayer</code>, with a few extra options. Notice that we assigned it to a variable, <code>nasa</code>, exactly as we did for the other layers.</li>
+      <li><code>layers</code> is the layer name from Step 3. This is the option students most often get wrong.</li>
+      <li><code>transparent: true</code> tells the server to leave the empty areas see through, so your other layers remain visible underneath. Try changing it to <code>false</code> to see the difference.</li>
+      <li><code>opacity</code> controls how strongly the layer shows. A value between 0 and 1.</li>
+    </ul>
+  </li>
+
+  <li><b>Step 6. Add it to the layers control.</b> Add one line to your <code>overlaymaps</code> object:
+    <div class="code-container">
+      <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+      <pre><code class="language-js">
+var overlaymaps = {
+    "London Boroughs": boroughs,
+    "NASA Imagery": nasa
+};</code></pre></div>
+    The WMS layer is an <b>overlay</b>, not a base layer, because it is data drawn on top of your map rather than the background your map sits on.</li>
+
+  <li><b>If the layer does not appear</b>, check these four things in order:
+    <ul>
+      <li>Is the address <code>https</code> and not <code>http</code>? GitHub Pages will block <code>http</code> requests and will not warn you.</li>
+      <li>Is the layer name spelled exactly as it appeared in QGIS, including capital letters and underscores?</li>
+      <li>Does the address end with a question mark, as shown above?</li>
+      <li>Did the layer have data for the current date when you checked it in QGIS?</li>
+    </ul>
+    Many NASA layers change from day to day. If you want a specific date, add a <code>time</code> option:
+    <div class="code-container">
+      <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+      <pre><code class="language-js">
+    time: '2026-09-01'</code></pre></div>
+  </li>
+</ul>
+
+
+<!-- ============================================================
+     REPLACEMENT FOR THE FIRST BULLET OF THE DELIVERABLES SECTION
+     (currently line 333). Rubric still totals 25 points.
+     ============================================================ -->
+
+<li>Create a layer control with AT LEAST <mark>TWO basemaps (DIFFERENT from the ones I used in the example above; <b>6 pts</b>)</mark> and <mark>TWO overlay layers in the same geographic area (different from the one I used; you may reuse your lab 3 data and find another one for the same region. <b>8 pts</b>)</mark>.
+  <ul>
+    <li>Feel free to reuse your lab 3 data as one of the overlay layers.</li>
+    <li>Your second layer does not have to be related to the theme of the map. It may be points, lines, or polygons (just for practice). You may leave the layer in the default style. If you would like to customize the layer, <a href="https://leafletjs.com/examples/geojson/" target="_blank">this Leaflet tutorial</a> may be helpful.</li>
+    <li><mark>Include ONE WMS layer</mark> as an additional overlay (<b>5 pts</b>). You may use the same NASA layer shown in the example above, or find a different one by following Steps 1 through 4. Either choice receives full credit.</li>
+    <li>Make sure to <mark>control the legend</mark> properly (<b>3 pts</b>).</li>
+    <li><mark>Add a heading</mark> to your map to describe what you are mapping (<b>3 pts</b>).</li>
+  </ul>
+</li>
